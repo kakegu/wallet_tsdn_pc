@@ -1,0 +1,112 @@
+<style>
+	span.spanClose{
+		margin-left: 10px;
+		color: #0095ff;
+		line-height:45px;
+		cursor: pointer;
+	}
+	span.NgspanClose{
+		color: #8E8E8E;
+	}
+	p.pButton{
+		height: 35px;
+		text-align: center;
+		line-height: 35px;
+		background: #0095ff;
+		color: #fff;
+		border-radius: 5px;
+		cursor: pointer;
+		width: 40%;
+		position: fixed;
+		bottom: 45px;
+		left: 30%;
+	}
+	p.ngpButton{
+		background: #999;
+	}
+	p.tosend{
+		padding-left: 10px;
+		margin: 15px 0 0 0;
+		font-size: 14px;
+		color: #333;
+	}
+	p.tosends{
+		padding-left: 10px;
+		margin: 0;
+		font-size: 14px;
+		color: #333;
+	}
+	div.sendwrap{
+		height: 350px;
+		overflow: auto;
+		margin-top: 20px;
+	}
+	ul.sendul{
+		list-style: none;
+		padding-left: 10px;
+		margin: 0;
+		font-size: 16px;
+	}
+	ul.sendul li{
+		line-height: 35px;
+	}
+	ul.sendul li .fspan{
+		margin-bottom: 0px;
+		font-size: 14px;
+	}
+	ul.sendul li .sspan{
+		text-align: right;
+		margin-right: 10px;
+		border-bottom: 1px solid #E8E8E8;
+		padding-bottom: 5px;
+		padding-right: 15px;
+		font-size: 14px;
+	}
+	div.loading{
+		text-align: center;
+		padding-top: 150px;
+		color: #666;
+	}
+</style>
+
+
+<div ng-controller="sendAssets as sendA">
+	<span class="spanClose" ng-class="{'NgspanClose': !sendA.ableClick}" ng-click="sendA.closeSend()" translate>Close</span>
+
+	<div ng-if="!sendA.onloading && !sendA.error">
+		<p class="tosend" ng-if="sendA.message">
+			<span translate>Message:</span>
+			<span>{{sendA.message}}</span>
+		</p>
+		<p class="tosends">
+			<span translate>Type of Assets:</span>
+			<span>{{sendA.assetsType}}</span>
+		</p>
+		<p class="tosends">
+			<span translate>AssetsID:</span>
+			<span>{{sendA.Showasset}}</span>
+		</p>
+
+		<div class="sendwrap">
+			<ul class="sendul">
+				<li ng-repeat="item in sendA.outputs">
+					<p class="fspan">{{item.address}}</p>
+					<p class="sspan">{{sendA.asset == 'base'? item.amount/1000000:item.amount}} {{sendA.assetsType}}</p>
+				</li>
+			</ul>
+		</div>
+		<div class="cb"></div>
+	</div>
+
+	<div class="loading" ng-if="sendA.onloading" translate>Loading...</div>
+	<div class="loading" ng-if="sendA.error" translate>{{sendA.error}}</div>
+
+
+
+	<p class="pButton" ng-class="{'ngpButton':sendA.ableClick == 0}" ng-click="sendA.sendAssets()" translate ng-if="!sendA.showSending">Send</p>
+
+	<p class="pButton" translate ng-if="sendA.showSending">Sending...</p>
+
+</div>
+
+
